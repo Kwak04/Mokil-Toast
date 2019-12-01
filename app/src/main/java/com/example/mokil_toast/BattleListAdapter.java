@@ -26,10 +26,14 @@ public class BattleListAdapter extends RecyclerView.Adapter<BattleListAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.class1.setText(battleData.results[position].class1);
-        holder.class2.setText(battleData.results[position].class2);
-        holder.score1.setText(battleData.results[position].score1);
-        holder.score2.setText(battleData.results[position].score2);
+        String class1Text = battleData.results[position].class1 + "반";
+        String class2Text = battleData.results[position].class2 + "반";
+        String score1Text = battleData.results[position].score1;
+        String score2Text = battleData.results[position].score2;
+        holder.class1.setText(class1Text);
+        holder.class2.setText(class2Text);
+        holder.score1.setText(score1Text);
+        holder.score2.setText(score2Text);
     }
 
     @Override
