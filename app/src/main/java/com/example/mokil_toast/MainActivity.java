@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
 
     BattleData body;
 
+    Animation fadeIn;
+
     String TAG = "MainActivity";
 
     @Override
@@ -48,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
         title = findViewById(R.id.tv_title);
         tabHost = findViewById(R.id.tab_host);
         battleList = findViewById(R.id.battle_list);
+
+        fadeIn = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
 
         getWindow().setStatusBarColor(getResources().getColor(R.color.colorBackground));
 
@@ -121,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
                     BattleListAdapter battleListAdapter = new BattleListAdapter(body);
                     battleList.setAdapter(battleListAdapter);
+                    battleList.startAnimation(fadeIn);
                 } else {
                     Toast.makeText(MainActivity.this, "로드 실패", Toast.LENGTH_SHORT).show();
                 }
