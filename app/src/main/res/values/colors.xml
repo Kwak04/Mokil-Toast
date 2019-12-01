@@ -7,6 +7,10 @@
     <!-- App -->
     <color name="colorBackground">#FD8B5F</color>
 
+    <!-- Score -->
+    <color name="colorHighScore">#FC6B36</color>
+    <color name="colorLowScore">#4F4FFA</color>
+
     <!-- My colors -->
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
