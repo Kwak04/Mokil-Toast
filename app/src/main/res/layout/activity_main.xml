@@ -26,7 +26,7 @@
                 style="@style/titleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_battle" />
+                android:text="@string/text_main_battle" />
 
         </LinearLayout>
 
