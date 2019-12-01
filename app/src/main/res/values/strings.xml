@@ -1,10 +1,13 @@
 <resources>
     <string name="app_name">토스트</string>
 
+    <!-- activity_splash -->
+    <string name="text_splash_title">Toast</string>
+
     <!-- activity_main -->
-    <string name="text_battle">경기</string>
-    <string name="text_class">반</string>
-    
+    <string name="text_main_battle">경기</string>
+    <string name="text_main_class">반</string>
+
     <!-- battle_list_item -->
     <string name="sample_score1">3</string>
     <string name="sample_score2">11</string>

@@ -80,12 +80,12 @@ public class MainActivity extends AppCompatActivity {
 
                 // Battle tab
                 if (tabIndex == 0) {
-                    title.setText(R.string.text_battle);
+                    title.setText(R.string.text_main_battle);
                 }
 
                 // Class tab
                 if (tabIndex == 1) {
-                    title.setText(R.string.text_class);
+                    title.setText(R.string.text_main_class);
                 }
             }
         });
