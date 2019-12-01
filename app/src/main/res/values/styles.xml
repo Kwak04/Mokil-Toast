@@ -14,4 +14,9 @@
         <item name="android:textSize">30sp</item>
     </style>
 
+    <style name="scoreTextView">
+        <item name="android:fontFamily">@font/nanum_square_round_extra_bold</item>
+        <item name="android:textSize">45sp</item>
+    </style>
+
 </resources>

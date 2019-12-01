@@ -22,6 +22,7 @@
             android:layout_marginBottom="20dp">
 
             <TextView
+                android:id="@+id/tv_title"
                 style="@style/titleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -48,10 +49,16 @@
                     <LinearLayout
                         android:id="@+id/battle_content"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:orientation="vertical">
 
-                        <!-- Add battle tab content here -->
+                        <!-- Add battle tab content here-->
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/battle_list"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scrollbars="vertical" />
 
                     </LinearLayout>
 
@@ -71,6 +78,7 @@
                     android:id="@android:id/tabs"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp"
                     android:layout_weight="0"
                     app:layout_constraintBottom_toBottomOf="parent"/>

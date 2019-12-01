@@ -3,4 +3,12 @@
 
     <!-- activity_main -->
     <string name="text_battle">경기</string>
+    <string name="text_class">반</string>
+    
+    <!-- battle_list_item -->
+    <string name="sample_score1">3</string>
+    <string name="sample_score2">11</string>
+    <string name="sample_class1">4반</string>
+    <string name="sample_class2">11반</string>
+    <string name="text_divide_class">:</string>
 </resources>
