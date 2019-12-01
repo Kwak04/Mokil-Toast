@@ -39,7 +39,6 @@
             android:fontFamily="@font/nanum_square_round_bold"
             android:gravity="center"
             android:text="@string/sample_class2"
-            android:textColor="@color/colorBlack"
             android:textSize="15sp"/>
 
     </LinearLayout>

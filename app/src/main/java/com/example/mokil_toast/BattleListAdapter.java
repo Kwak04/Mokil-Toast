@@ -34,6 +34,22 @@ public class BattleListAdapter extends RecyclerView.Adapter<BattleListAdapter.Vi
         holder.class2.setText(class2Text);
         holder.score1.setText(score1Text);
         holder.score2.setText(score2Text);
+
+        // Color according to score
+        int intScore1 = Integer.parseInt(battleData.results[position].score1);
+        int intScore2 = Integer.parseInt(battleData.results[position].score2);
+        if (intScore1 > intScore2) {
+            holder.class1.setTextColor(holder.itemView.getResources().getColor(R.color.colorBlack));
+            holder.score1.setTextColor(holder.itemView.getResources().getColor(R.color.colorHighScore));
+            holder.score2.setTextColor(holder.itemView.getResources().getColor(R.color.colorLowScore));
+        } else if (intScore1 < intScore2) {
+            holder.class2.setTextColor(holder.itemView.getResources().getColor(R.color.colorBlack));
+            holder.score1.setTextColor(holder.itemView.getResources().getColor(R.color.colorLowScore));
+            holder.score2.setTextColor(holder.itemView.getResources().getColor(R.color.colorHighScore));
+        } else {
+            holder.score1.setTextColor(holder.itemView.getResources().getColor(R.color.colorLowScore));
+            holder.score2.setTextColor(holder.itemView.getResources().getColor(R.color.colorLowScore));
+        }
     }
 
     @Override
