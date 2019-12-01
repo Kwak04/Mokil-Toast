@@ -22,6 +22,7 @@
             android:layout_marginBottom="20dp">
 
             <TextView
+                android:id="@+id/tv_title"
                 style="@style/titleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

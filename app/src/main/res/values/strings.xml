@@ -3,4 +3,5 @@
 
     <!-- activity_main -->
     <string name="text_battle">경기</string>
+    <string name="text_class">반</string>
 </resources>
