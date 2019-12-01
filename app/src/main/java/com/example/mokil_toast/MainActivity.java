@@ -12,6 +12,10 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Objects;
 
 import retrofit2.Call;
@@ -91,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
         // RecyclerView
         battleList.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         battleList.setLayoutManager(linearLayoutManager);
 
         retrofitService.getBattle().enqueue(new Callback<BattleData>() {
@@ -102,6 +106,19 @@ public class MainActivity extends AppCompatActivity {
                 String message = Objects.requireNonNull(body).message;
 
                 if (message.equals("success")) {
+                    List<BattleData> battleDataList = new ArrayList<>();
+                    battleDataList.add(body);
+                    Collections.sort(battleDataList, new Comparator<BattleData>() {
+                        @Override
+                        public int compare(BattleData lhs, BattleData rhs) {
+                            return Integer.compare(lhs.results[0].seq.compareTo(rhs.results[0].seq), 0);
+                        }
+                    });
+
+                    // Reverse
+                    linearLayoutManager.setReverseLayout(true);
+                    linearLayoutManager.setStackFromEnd(true);
+
                     BattleListAdapter battleListAdapter = new BattleListAdapter(body);
                     battleList.setAdapter(battleListAdapter);
                 } else {

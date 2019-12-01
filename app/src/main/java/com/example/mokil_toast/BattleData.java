@@ -5,6 +5,8 @@ class BattleData {
     Result[] results;
 
     class Result {
+        String seq;
+
         String class1;
         String score1;
         String class2;
