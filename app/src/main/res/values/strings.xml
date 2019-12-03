@@ -6,7 +6,9 @@
     <string name="sample_score2">11</string>
     <string name="sample_class1">4반</string>
     <string name="sample_class2">11반</string>
-    <string name="sample_win">이긴 횟수: 4</string>
+    <string name="sample_win_with_text">이긴 횟수: 4</string>
+    <string name="sample_win">4회</string>
+    <string name="sample_vote_rate">100%</string>
 
     <!-- activity_splash -->
     <string name="text_splash_title">Toast</string>
@@ -17,4 +19,8 @@
 
     <!-- battle_list_item -->
     <string name="text_divide_class">:</string>
+
+    <!-- activity_class_info -->
+    <string name="text_class_info_win">이긴 횟수</string>
+    <string name="text_class_info_vote_rate">투표율</string>
 </resources>
