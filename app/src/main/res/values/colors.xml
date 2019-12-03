@@ -4,8 +4,11 @@
     <color name="colorPrimaryDark">#FD8B5F</color>
     <color name="colorAccent">#D81B60</color>
 
+    <color name="ic_launcher_background">#FD8B5F</color>
+
     <!-- App -->
     <color name="colorBackground">#FD8B5F</color>
+    <color name="colorListBackground">#D2FFFFFF</color>
 
     <!-- Score -->
     <color name="colorHighScore">#FC6B36</color>
