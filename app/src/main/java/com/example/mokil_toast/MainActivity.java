@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView title;
     TabHost tabHost;
-    RecyclerView battleList;
+    RecyclerView battleList, classList;
 
     Retrofit retrofit = new Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
@@ -38,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
             .build();
     RetrofitService retrofitService = retrofit.create(RetrofitService.class);
 
-    BattleData body;
+    BattleData battleDataBody;
+    ClassData classDataBody;
 
     Animation fadeIn;
 
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         title = findViewById(R.id.tv_title);
         tabHost = findViewById(R.id.tab_host);
         battleList = findViewById(R.id.battle_list);
+        classList = findViewById(R.id.class_list);
 
         fadeIn = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
 
@@ -104,16 +106,16 @@ public class MainActivity extends AppCompatActivity {
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         battleList.setLayoutManager(linearLayoutManager);
 
-        retrofitService.getBattle().enqueue(new Callback<BattleData>() {
+        retrofitService.getBattleInfo().enqueue(new Callback<BattleData>() {
             @Override
             public void onResponse(@NonNull Call<BattleData> call, @NonNull Response<BattleData> response) {
-                body = response.body();
-                Log.d(TAG, "onResponse: body = " + body);
-                String message = Objects.requireNonNull(body).message;
+                battleDataBody = response.body();
+                Log.d(TAG, "onResponse: battleDataBody = " + battleDataBody);
+                String message = Objects.requireNonNull(battleDataBody).message;
 
                 if (message.equals("success")) {
                     List<BattleData> battleDataList = new ArrayList<>();
-                    battleDataList.add(body);
+                    battleDataList.add(battleDataBody);
                     Collections.sort(battleDataList, new Comparator<BattleData>() {
                         @Override
                         public int compare(BattleData lhs, BattleData rhs) {
@@ -125,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                     linearLayoutManager.setReverseLayout(true);
                     linearLayoutManager.setStackFromEnd(true);
 
-                    BattleListAdapter battleListAdapter = new BattleListAdapter(body);
+                    BattleListAdapter battleListAdapter = new BattleListAdapter(battleDataBody);
                     battleList.setAdapter(battleListAdapter);
                     battleList.startAnimation(fadeIn);
                 } else {
@@ -135,7 +137,43 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<BattleData> call, @NonNull Throwable t) {
-                Toast.makeText(MainActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "데이터를 불러올 수 없습니다.", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "onFailure: ", t);
+            }
+        });
+
+
+        // CLASS LIST
+
+        // RecyclerView
+        classList.setHasFixedSize(true);
+        classList.setLayoutManager(new LinearLayoutManager(this));
+
+        retrofitService.getClassInfo().enqueue(new Callback<ClassData>() {
+            @Override
+            public void onResponse(@NonNull Call<ClassData> call, @NonNull Response<ClassData> response) {
+                classDataBody = response.body();
+                Log.d(TAG, "onResponse: classDataBody = " + classDataBody);
+                String message = Objects.requireNonNull(classDataBody).message;
+
+                if (message.equals("success")) {
+                    List<ClassData> classDataList = new ArrayList<>();
+                    classDataList.add(classDataBody);
+                    Collections.sort(classDataList, new Comparator<ClassData>() {
+                        @Override
+                        public int compare(ClassData lhs, ClassData rhs) {
+                            return Integer.compare(lhs.results[0].class_number.compareTo(rhs.results[0].class_number), 0);
+                        }
+                    });
+                    ClassListAdapter classListAdapter = new ClassListAdapter(classDataBody);
+                    classList.setAdapter(classListAdapter);
+                    classList.startAnimation(fadeIn);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ClassData> call, @NonNull Throwable t) {
+                Toast.makeText(MainActivity.this, "데이터를 불러올 수 없습니다.", Toast.LENGTH_SHORT).show();
                 Log.e(TAG, "onFailure: ", t);
             }
         });

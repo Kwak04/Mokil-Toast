@@ -63,10 +63,10 @@ public class BattleListAdapter extends RecyclerView.Adapter<BattleListAdapter.Vi
         ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            class1 = itemView.findViewById(R.id.tv_class1);
-            class2 = itemView.findViewById(R.id.tv_class2);
-            score1 = itemView.findViewById(R.id.tv_score1);
-            score2 = itemView.findViewById(R.id.tv_score2);
+            class1 = itemView.findViewById(R.id.tv_battle_class1);
+            class2 = itemView.findViewById(R.id.tv_battle_class2);
+            score1 = itemView.findViewById(R.id.tv_battle_score1);
+            score2 = itemView.findViewById(R.id.tv_battle_score2);
         }
     }
 }
