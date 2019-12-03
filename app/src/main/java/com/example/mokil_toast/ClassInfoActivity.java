@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,6 +33,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ClassInfoActivity extends AppCompatActivity {
 
+    CheckBox vote;
     ImageButton reload;
     LinearLayout mainPanel;
     TextView classNumber, win, voteRate;
@@ -42,8 +46,11 @@ public class ClassInfoActivity extends AppCompatActivity {
     RetrofitService retrofitService = retrofit.create(RetrofitService.class);
 
     BattleData battleDataBody;
+    SimpleMessageData simpleMessageDatabody;
 
     Animation fadeIn;
+
+    boolean isVoted;
 
     String TAG = "ClassInfoActivity";
 
@@ -54,6 +61,7 @@ public class ClassInfoActivity extends AppCompatActivity {
 
         getWindow().setStatusBarColor(getResources().getColor(R.color.colorBackground));
 
+        vote = findViewById(R.id.cb_vote);
         reload = findViewById(R.id.btn_reload);
         mainPanel = findViewById(R.id.layout_main);
         classNumber = findViewById(R.id.tv_class_number);
@@ -63,6 +71,10 @@ public class ClassInfoActivity extends AppCompatActivity {
 
         fadeIn = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
 
+
+        // SharedPreferences
+        SharedPreferences preferences = getSharedPreferences("GENERAL_DATA", MODE_PRIVATE);
+        final SharedPreferences.Editor editor = preferences.edit();
 
         // getIntent
         final int classNumberValue = Objects.requireNonNull(getIntent().getExtras()).getInt("classNumber");
@@ -87,6 +99,68 @@ public class ClassInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 loadClassBattleInfo(classNumberValue);
+            }
+        });
+
+        // Vote checkbox
+        isVoted = preferences.getBoolean("isVoted", false);
+        if (isVoted) {
+            vote.setChecked(true);
+        } else {
+            vote.setChecked(false);
+        }
+
+        // Vote
+        final HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("class_number", classNumberValue);
+        vote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!isVoted) {
+                    isVoted = true;
+                    editor.putBoolean("isVoted", true);
+                    editor.apply();
+
+                    retrofitService.vote(hashMap).enqueue(new Callback<SimpleMessageData>() {
+                        @Override
+                        public void onResponse(@NonNull Call<SimpleMessageData> call, @NonNull Response<SimpleMessageData> response) {
+                            simpleMessageDatabody = response.body();
+                            String message = Objects.requireNonNull(simpleMessageDatabody).message;
+                            if (message.equals("success")) {
+                                vote.setChecked(isVoted);
+                            } else {
+                                Toast.makeText(ClassInfoActivity.this, "데이터를 불러올 수 없습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(@NonNull Call<SimpleMessageData> call, @NonNull Throwable t) {
+                            Toast.makeText(ClassInfoActivity.this, "데이터를 불러올 수 없습니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    isVoted = false;
+                    editor.putBoolean("isVoted", false);
+                    editor.apply();
+
+                    retrofitService.unvote(hashMap).enqueue(new Callback<SimpleMessageData>() {
+                        @Override
+                        public void onResponse(@NonNull Call<SimpleMessageData> call, @NonNull Response<SimpleMessageData> response) {
+                            simpleMessageDatabody = response.body();
+                            String message = Objects.requireNonNull(simpleMessageDatabody).message;
+                            if (message.equals("success")) {
+                                vote.setChecked(isVoted);
+                            } else {
+                                Toast.makeText(ClassInfoActivity.this, "데이터를 불러올 수 없습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(@NonNull Call<SimpleMessageData> call, @NonNull Throwable t) {
+                            Toast.makeText(ClassInfoActivity.this, "데이터를 불러올 수 없습니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         });
     }
@@ -135,6 +209,5 @@ public class ClassInfoActivity extends AppCompatActivity {
                 Log.e(TAG, "onFailure: ", t);
             }
         });
-
     }
 }
