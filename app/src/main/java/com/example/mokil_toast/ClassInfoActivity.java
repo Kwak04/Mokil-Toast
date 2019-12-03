@@ -81,7 +81,7 @@ public class ClassInfoActivity extends AppCompatActivity {
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         battleList.setLayoutManager(linearLayoutManager);
 
-        retrofitService.getBattleInfo().enqueue(new Callback<BattleData>() {
+        retrofitService.getClassBattleInfo(Integer.toString(classNumberValue)).enqueue(new Callback<BattleData>() {
             @Override
             public void onResponse(@NonNull Call<BattleData> call, @NonNull Response<BattleData> response) {
                 battleDataBody = response.body();

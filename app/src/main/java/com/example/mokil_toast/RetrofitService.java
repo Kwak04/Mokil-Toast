@@ -2,6 +2,7 @@ package com.example.mokil_toast;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 public interface RetrofitService {
 
@@ -11,6 +12,10 @@ public interface RetrofitService {
     // 경기 정보 가져오기
     @GET("/battle/battleinfo")
     Call<BattleData> getBattleInfo();
+
+    // 반별 경기 정보 가져오기
+    @GET("/class/battleinfo")
+    Call<BattleData> getClassBattleInfo(@Query("class_number") String class_number);
 
     // 반 정보 가져오기
     @GET("/class/classinfo")
