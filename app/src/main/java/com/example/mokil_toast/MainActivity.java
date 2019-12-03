@@ -7,8 +7,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -29,6 +31,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity {
 
     TextView title;
+    ImageButton reload;
     TabHost tabHost;
     RecyclerView battleList, classList;
 
@@ -51,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         title = findViewById(R.id.tv_title);
+        reload = findViewById(R.id.btn_reload);
         tabHost = findViewById(R.id.tab_host);
         battleList = findViewById(R.id.battle_list);
         classList = findViewById(R.id.class_list);
@@ -99,12 +103,28 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        // BATTLE LIST
-
-        // RecyclerView
+        // Battle list
         battleList.setHasFixedSize(true);
+        battleList.setLayoutManager(new LinearLayoutManager(this));
+        loadBattleInfo();
+
+        // Class list
+        classList.setHasFixedSize(true);
+        classList.setLayoutManager(new LinearLayoutManager(this));
+        loadClassInfo();
+
+        // Reload button
+        reload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadBattleInfo();
+                loadClassInfo();
+            }
+        });
+    }
+
+    public void loadBattleInfo() {
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        battleList.setLayoutManager(linearLayoutManager);
 
         retrofitService.getBattleInfo().enqueue(new Callback<BattleData>() {
             @Override
@@ -141,14 +161,9 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(TAG, "onFailure: ", t);
             }
         });
+    }
 
-
-        // CLASS LIST
-
-        // RecyclerView
-        classList.setHasFixedSize(true);
-        classList.setLayoutManager(new LinearLayoutManager(this));
-
+    public void loadClassInfo() {
         retrofitService.getClassInfo().enqueue(new Callback<ClassData>() {
             @Override
             public void onResponse(@NonNull Call<ClassData> call, @NonNull Response<ClassData> response) {

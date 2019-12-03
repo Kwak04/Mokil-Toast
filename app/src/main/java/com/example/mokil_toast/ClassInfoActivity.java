@@ -8,8 +8,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +30,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ClassInfoActivity extends AppCompatActivity {
 
+    ImageButton reload;
     LinearLayout mainPanel;
     TextView classNumber, win, voteRate;
     RecyclerView battleList;
@@ -51,6 +54,7 @@ public class ClassInfoActivity extends AppCompatActivity {
 
         getWindow().setStatusBarColor(getResources().getColor(R.color.colorBackground));
 
+        reload = findViewById(R.id.btn_reload);
         mainPanel = findViewById(R.id.layout_main);
         classNumber = findViewById(R.id.tv_class_number);
         win = findViewById(R.id.tv_win);
@@ -61,7 +65,7 @@ public class ClassInfoActivity extends AppCompatActivity {
 
 
         // getIntent
-        int classNumberValue = Objects.requireNonNull(getIntent().getExtras()).getInt("classNumber");
+        final int classNumberValue = Objects.requireNonNull(getIntent().getExtras()).getInt("classNumber");
         int winValue = getIntent().getExtras().getInt("win");
 
         // Title
@@ -73,14 +77,22 @@ public class ClassInfoActivity extends AppCompatActivity {
         String winText = winValue + "회";
         win.setText(winText);
 
-
-
         // Battle list
-
         battleList.setHasFixedSize(true);
-        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        battleList.setLayoutManager(linearLayoutManager);
+        battleList.setLayoutManager(new LinearLayoutManager(this));
+        loadClassBattleInfo(classNumberValue);
 
+        // Reload button
+        reload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadClassBattleInfo(classNumberValue);
+            }
+        });
+    }
+
+    public void loadClassBattleInfo(int classNumberValue) {
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         retrofitService.getClassBattleInfo(Integer.toString(classNumberValue)).enqueue(new Callback<BattleData>() {
             @Override
             public void onResponse(@NonNull Call<BattleData> call, @NonNull Response<BattleData> response) {
@@ -123,5 +135,6 @@ public class ClassInfoActivity extends AppCompatActivity {
                 Log.e(TAG, "onFailure: ", t);
             }
         });
+
     }
 }
