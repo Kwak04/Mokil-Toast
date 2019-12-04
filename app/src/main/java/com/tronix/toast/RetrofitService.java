@@ -1,4 +1,4 @@
-package com.example.mokil_toast;
+package com.tronix.toast;
 
 import java.util.HashMap;
 
@@ -11,7 +11,7 @@ import retrofit2.http.Query;
 
 public interface RetrofitService {
 
-    String ip = "10.0.2.2";
+    String ip = "34.238.115.101";
     String URL = "http://" + ip + ":3000/";
 
     // 경기 정보 가져오기

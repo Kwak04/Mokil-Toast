@@ -1,4 +1,4 @@
-package com.example.mokil_toast;
+package com.tronix.toast;
 
 class ClassData {
     String message;

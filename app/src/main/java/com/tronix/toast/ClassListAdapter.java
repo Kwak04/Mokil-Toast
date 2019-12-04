@@ -1,6 +1,5 @@
-package com.example.mokil_toast;
+package com.tronix.toast;
 
-import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
