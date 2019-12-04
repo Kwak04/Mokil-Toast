@@ -180,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
                             return Integer.compare(lhs.results[0].class_number.compareTo(rhs.results[0].class_number), 0);
                         }
                     });
+
                     ClassListAdapter classListAdapter = new ClassListAdapter(classDataBody);
                     classList.setAdapter(classListAdapter);
                     classList.startAnimation(fadeIn);

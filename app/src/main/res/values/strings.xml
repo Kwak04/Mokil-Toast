@@ -22,5 +22,5 @@
 
     <!-- activity_class_info -->
     <string name="text_class_info_win">이긴 횟수</string>
-    <string name="text_class_info_vote_rate">투표율</string>
+    <string name="text_class_info_vote_rate">우승 투표</string>
 </resources>
