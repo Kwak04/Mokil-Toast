@@ -47,6 +47,7 @@ public class ClassInfoActivity extends AppCompatActivity {
 
     BattleData battleDataBody;
     SimpleMessageData simpleMessageDatabody;
+    VoteData voteDataBody;
 
     Animation fadeIn;
 
@@ -79,15 +80,18 @@ public class ClassInfoActivity extends AppCompatActivity {
         // getIntent
         final int classNumberValue = Objects.requireNonNull(getIntent().getExtras()).getInt("classNumber");
         int winValue = getIntent().getExtras().getInt("win");
+        int classVoteRateValue = getIntent().getExtras().getInt("classVoteRate");
 
         // Title
         String classNumberText = classNumberValue + "반";
         classNumber.setText(classNumberText);
 
         // Main
-        mainPanel.startAnimation(fadeIn);  // Main panel animation
         String winText = winValue + "회";
         win.setText(winText);
+        String voteRateText = classVoteRateValue + "명";
+        voteRate.setText(voteRateText);
+        mainPanel.startAnimation(fadeIn);  // Main panel animation
 
         // Battle list
         battleList.setHasFixedSize(true);

@@ -35,9 +35,11 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.View
                 Intent intent = new Intent(view.getContext(), ClassInfoActivity.class);
                 int classNumberValue = Integer.parseInt(classData.results[position].class_number);
                 int winValue = Integer.parseInt(classData.results[position].win);
+                int classVoteRateValue = Integer.parseInt(classData.results[position].win_vote);
 
                 intent.putExtra("classNumber", classNumberValue);
                 intent.putExtra("win", winValue);
+                intent.putExtra("classVoteRate", classVoteRateValue);
 
                 view.getContext().startActivity(intent);
             }

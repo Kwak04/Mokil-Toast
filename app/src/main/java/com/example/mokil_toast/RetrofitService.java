@@ -35,4 +35,8 @@ public interface RetrofitService {
     @FormUrlEncoded
     @POST("/class/unvote")
     Call<SimpleMessageData> unvote(@FieldMap HashMap<String, Object> param);
+
+    // 반별 투표 결과 가져오기
+    @GET("/class/voteresult")
+    Call<VoteData> getClassVoteResult(@Query("class_number") String class_number);
 }

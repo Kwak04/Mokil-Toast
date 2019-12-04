@@ -7,5 +7,6 @@ class ClassData {
     class Result {
         String class_number;
         String win;
+        String win_vote;
     }
 }
